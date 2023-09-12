@@ -1,0 +1,4 @@
+{
+    "name": "Close done issues",
+    "description": "Closes an issue when it gets moved to 'Done' on the project board"
+}

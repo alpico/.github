@@ -1,0 +1,42 @@
+name: Close done issues
+
+on:
+  projects_v2_item: edited
+
+env:
+  ITEM_ID: ${{ github.event.projects_v2_item.node_id }}
+
+jobs:
+  move:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          json=$(gh api graphql -f query='query GetItemInfo {
+            node(id: "${{ env.ITEM_ID }}") {
+              ... on ProjectV2Item {
+                fieldValueByName(name: "Status") {
+                  ... on ProjectV2ItemFieldSingleSelectValue {
+                    name
+                    item {
+                      content {
+                        ... on Issue {
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }' | jq -c '.data.node.fieldValueByName')
+          echo "STATUS_NAME=$(echo ${json} | jq -c .name)" >> $GITHUB_ENV
+          echo "ISSUE_ID=$(echo ${json} | jq -c .item.content.id)" >> $GITHUB_ENV
+      - run: echo ${{ env.STATUS_NAME }}
+      - if: env.STATUS_NAME == '"Done"'
+        run: |
+          gh api graphql -f query='mutation closeDoneIssue {
+            closeIssue(input: {issueId: ${{ env.ISSUE_ID }}}) {
+              clientMutationId
+            }
+          }'
