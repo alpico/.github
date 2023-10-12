@@ -1,0 +1,4 @@
+{
+    "name": "Move issues to in review",
+    "description": "Automatically move issues to the \"In Review\" column on the project board when a PR is opened or a review is requested"
+}

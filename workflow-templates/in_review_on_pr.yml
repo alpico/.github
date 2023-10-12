@@ -1,0 +1,15 @@
+name: Move linked issues to "In Review"
+
+on:
+  pull_request:
+    types: [opened, edited, ready_for_review, review_requested]
+
+jobs:
+  MoveLinkedIssues:
+    uses: alpico/workflows/.github/workflows/in_review_on_pr.yml@experiment
+    with:
+      organization: "alpico"
+      project: "Test Project"
+    secrets:
+      gh_token: ${{ secrets.GH_TOKEN }}
+

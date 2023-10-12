@@ -1,0 +1,14 @@
+name: Move linked issues to "In Progress"
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  MoveLinkedIssues:
+    uses: alpico/workflows/.github/workflows/in_progress_on_change_requested.yml@experiment
+    with:
+      organization: "alpico"
+      project: "Test Project"
+    secrets:
+      gh_token: ${{ secrets.GH_TOKEN }}

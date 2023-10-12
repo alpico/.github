@@ -1,0 +1,4 @@
+{
+    "name": "Move issues to in progress",
+    "description": "Automatically move issues to the \"In Progress\" column on the project board when changes are requested in a PR review"
+}
