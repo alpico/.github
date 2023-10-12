@@ -6,7 +6,7 @@ on:
 
 jobs:
   MoveLinkedIssues:
-    uses: alpico/workflows/.github/workflows/in_review_on_pr.yml@experiment
+    uses: alpico/workflows/.github/workflows/in_review_on_pr.yml@main
     with:
       organization: "alpico"
       project: "Test Project"
